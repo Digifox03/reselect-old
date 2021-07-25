@@ -4,7 +4,7 @@
   "version": "${version}",
   "authors": ["Digifox03"],
   "name": "Reselect",
-  "environment": "*",
+  "environment": "client",
   "contact": {
     "email": "digifox03@protonmail.com",
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/reselect",
@@ -19,5 +19,13 @@
     "fabricloader": "*",
     "java": ">=16",
     "fabric-language-kotlin": ">=1.6.2+kotlin.1.5.20"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/pZZ5ubrwQK"
+      },
+      "badges": [ "library" ]
+    }
   }
 }
