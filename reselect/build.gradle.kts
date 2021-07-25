@@ -46,8 +46,10 @@ tasks.withType<JavaCompile> {
 }
 
 tasks.withType<Jar> {
-    from("LICENSE") {
+    from("../COPYING") {
+        rename { "${it}_${this@Build_gradle.archiveName}" }
+    }
+    from("../COPYING.LESSER") {
         rename { "${it}_${this@Build_gradle.archiveName}" }
     }
 }
-
