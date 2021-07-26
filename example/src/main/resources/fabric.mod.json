@@ -13,7 +13,7 @@
     "discord": "https://discord.gg/pZZ5ubrwQK"
   },
   "license": "LGPL-3.0-or-later",
-  "icon": "assets/reselect/icon.png",
+  "icon": "assets/reselect_example/icon.png",
   "recommends": {
     "reselect": "*"
   },

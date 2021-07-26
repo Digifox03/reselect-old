@@ -5,7 +5,7 @@ import it.digifox03.reselect.api.ReselectorUser;
 import net.minecraft.util.Identifier;
 
 public class ExampleReselectorUser implements ReselectorUser {
-    static final Identifier ZOMBIE_ID = new Identifier("varied_mobs", "zombie");
+    static final Identifier ZOMBIE_ID = new Identifier("reselect_example", "zombie");
 
     @Override
     public void onReselectorReload(ReselectorCompiler compiler) {
