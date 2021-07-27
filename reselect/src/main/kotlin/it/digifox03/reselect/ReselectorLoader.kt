@@ -5,7 +5,7 @@ import it.digifox03.reselect.compiler.ReselectorGenerator
 import it.digifox03.reselect.compiler.compile
 import net.minecraft.util.Identifier
 
-class ReselectorLoader(
+internal class ReselectorLoader(
     parent: ClassLoader,
     val loader: (Identifier) -> ReselectorGenerator?
 ) : ClassLoader(parent), ReselectorCompiler {

@@ -49,7 +49,7 @@ private fun getFields(method: Method): Array<Triple<String, Int, Type>> {
     }
 }
 
-fun compile(
+internal fun compile(
     className: String,
     clazz: Class<*>,
     generator: ReselectorGenerator

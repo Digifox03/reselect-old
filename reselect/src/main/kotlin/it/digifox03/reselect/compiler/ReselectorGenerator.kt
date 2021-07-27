@@ -3,7 +3,7 @@ package it.digifox03.reselect.compiler
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.MethodVisitor
 
-interface ReselectorGenerator {
+internal interface ReselectorGenerator {
     var className: String // write only
 
     /**

@@ -9,7 +9,7 @@ import net.minecraft.resource.ResourceManager
 import net.minecraft.resource.ResourceType
 import net.minecraft.util.Identifier
 
-class ReselectLoader : SimpleSynchronousResourceReloadListener {
+internal class ReselectLoader : SimpleSynchronousResourceReloadListener {
     private val fabricId = Identifier("reselect", "reselectors")
     override fun getFabricId() = fabricId
     private fun loader(manager: ResourceManager, identifier: Identifier): ReselectorGenerator {
