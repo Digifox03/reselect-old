@@ -62,7 +62,9 @@ internal fun compile(
     val mainMethodDescriptor = Type.getMethodDescriptor(Type.getReturnType(target))
     val mainMethodName = "main$"
 
-    generator.className = className
+    generator.setClassName(className)
+    var counter = 0
+    generator.setNameProvider { "${counter++}$" }
 
     /// class header
     classVisitor.visit(
@@ -82,8 +84,8 @@ internal fun compile(
         fieldVisitor.visitEnd()
     }
 
-    /// fields required by generated code
-    generator.genFields(classVisitor)
+    /// members required by generated code
+    generator.genMembers(classVisitor)
 
     /// constructor method
     val constructorVisitor = classVisitor.visitMethod(
@@ -124,9 +126,6 @@ internal fun compile(
     generator.mainFunc(mainVisitor)
     mainVisitor.visitMaxs(0, 0)
     mainVisitor.visitEnd()
-
-    /// required methods
-    generator.genMethods(classVisitor)
 
     /// static method
     val staticVisitor = classVisitor.visitMethod(

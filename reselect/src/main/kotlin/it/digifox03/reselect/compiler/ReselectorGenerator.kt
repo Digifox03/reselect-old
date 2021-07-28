@@ -4,7 +4,8 @@ import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.MethodVisitor
 
 internal interface ReselectorGenerator {
-    var className: String // write only
+    fun setNameProvider(provider: () -> String)
+    fun setClassName(className: String)
 
     /**
      * generate code for the main function (root must always return something)
@@ -22,12 +23,7 @@ internal interface ReselectorGenerator {
     fun clInitFunc(visitor: MethodVisitor)
 
     /**
-     * generate all needed fields
+     * generate all needed fields and methods
      */
-    fun genFields(visitor: ClassVisitor)
-
-    /**
-     * generate all needed methods
-     */
-    fun genMethods(visitor: ClassVisitor)
+    fun genMembers(visitor: ClassVisitor)
 }
