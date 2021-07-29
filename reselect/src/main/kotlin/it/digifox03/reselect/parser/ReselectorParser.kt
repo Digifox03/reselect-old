@@ -19,6 +19,7 @@ internal interface ReselectorParser {
     }
 
     interface ReselectorHelper {
+        val dataSet: Map<String, Class<*>>
         val superReselector: ReselectorGenerator
         fun delegate(id: Identifier): ReselectorGenerator
     }

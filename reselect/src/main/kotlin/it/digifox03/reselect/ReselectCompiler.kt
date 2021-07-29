@@ -73,6 +73,7 @@ internal class ReselectCompiler(
 
     private fun buildGenerator(id: Identifier, depth: Int, dataSet: Map<String, Class<*>>): ReselectorGenerator {
         val helper = object : ReselectorParser.ReselectorHelper {
+            override val dataSet = dataSet
             override val superReselector get() = buildGenerator(id, depth + 1, dataSet)
             override fun delegate(id: Identifier) = buildGenerator(id, 0, dataSet)
         }
