@@ -7,7 +7,7 @@ public interface ReselectorUser {
      * (with the exception of the loading screen) happens.
      * When this method is called, all reselectors generated from
      * previous calls become invalid.
-     * @param compiler Used to require a reselector {@link ReselectorCompiler}
+     * @param compiler Used to require a reselector {@link ReselectorProvider}
      */
-    void onReselectorReload(ReselectorCompiler compiler);
+    void onReselectorReload(ReselectorProvider compiler);
 }

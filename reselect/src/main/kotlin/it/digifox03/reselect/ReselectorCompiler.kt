@@ -1,9 +1,9 @@
-package it.digifox03.reselect.compiler
+package it.digifox03.reselect
 
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.MethodVisitor
 
-internal interface ReselectorGenerator {
+internal interface ReselectorCompiler {
     fun setNameProvider(provider: () -> String)
     fun setClassName(className: String)
 

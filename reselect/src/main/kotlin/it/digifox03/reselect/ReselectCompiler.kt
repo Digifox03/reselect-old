@@ -1,8 +1,7 @@
 package it.digifox03.reselect
 
 import it.digifox03.reselect.api.ReselectMethod
-import it.digifox03.reselect.compiler.ReselectorGenerator
-import it.digifox03.reselect.parser.ReselectorParser
+import it.digifox03.reselect.api.ReselectorProvider
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -12,13 +11,12 @@ import org.objectweb.asm.ClassWriter
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.Type
 import java.lang.reflect.Method
-import it.digifox03.reselect.api.ReselectorCompiler as IReselectorCompiler
 
 internal class ReselectCompiler(
     private val generation: String,
     private val readReselector: (id: Identifier, level: Int) -> JsonElement,
     private val loadClass: (data: ByteArray) -> Class<*>
-): IReselectorCompiler {
+): ReselectorProvider {
     override fun <T : Any> get(id: Identifier, type: Class<T>): T {
         val internalClassName = newClassName(id)
         val method = findTargetMethod(type)
@@ -71,7 +69,7 @@ internal class ReselectCompiler(
         }
     }
 
-    private fun buildGenerator(id: Identifier, depth: Int, dataSet: Map<String, Class<*>>): ReselectorGenerator {
+    private fun buildGenerator(id: Identifier, depth: Int, dataSet: Map<String, Class<*>>): ReselectorCompiler {
         val helper = object : ReselectorParser.ReselectorHelper {
             override val dataSet = dataSet
             override val superReselector get() = buildGenerator(id, depth + 1, dataSet)
@@ -87,7 +85,7 @@ internal class ReselectCompiler(
     }
 
     private fun compile(
-        generator: ReselectorGenerator,
+        compiler: ReselectorCompiler,
         type: Class<*>,
         target: Method,
         className: String // the internal one must be used
@@ -96,21 +94,21 @@ internal class ReselectCompiler(
         val superClass = Type.getType(java.lang.Object::class.java)
         val implements = Type.getType(type)
         val mainDesc = Type.getMethodDescriptor(Type.getReturnType(target))
-        initializeGenerator(generator, className)
+        initializeGenerator(compiler, className)
         return compileClass(className, superClass, implements) {
-            generator.genMembers(this@compileClass)
+            compiler.genMembers(this@compileClass)
             compileParameterFields(fields)
-            compileInit(superClass, generator)
+            compileInit(superClass, compiler)
             compileTarget(target, fields, className, mainDesc)
-            compileMain(mainDesc, generator)
-            compileConst(generator)
+            compileMain(mainDesc, compiler)
+            compileConst(compiler)
         }
     }
 
-    private fun initializeGenerator(generator: ReselectorGenerator, className: String) {
-        generator.setClassName(className)
+    private fun initializeGenerator(compiler: ReselectorCompiler, className: String) {
+        compiler.setClassName(className)
         var counter = 0
-        generator.setNameProvider { "${counter++}$" }
+        compiler.setNameProvider { "${counter++}$" }
     }
 
     private fun compileClass(
@@ -146,7 +144,7 @@ internal class ReselectCompiler(
 
     private fun ClassVisitor.compileInit(
         superClass: Type,
-        generator: ReselectorGenerator
+        compiler: ReselectorCompiler
     ) {
         val constructorVisitor = visitMethod(
             Opcodes.ACC_PUBLIC, "<init>", "()V", null, null
@@ -154,7 +152,7 @@ internal class ReselectCompiler(
         constructorVisitor.visitCode()
         constructorVisitor.visitVarInsn(Opcodes.ALOAD, 0)
         constructorVisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, superClass.internalName, "<init>", "()V", false)
-        generator.initFunc(constructorVisitor)
+        compiler.initFunc(constructorVisitor)
         constructorVisitor.visitInsn(Opcodes.RETURN)
         constructorVisitor.visitMaxs(0, 0)
         constructorVisitor.visitEnd()
@@ -187,25 +185,25 @@ internal class ReselectCompiler(
 
     private fun ClassVisitor.compileMain(
         descriptor: String?,
-        generator: ReselectorGenerator
+        compiler: ReselectorCompiler
     ) {
         val mainVisitor = visitMethod(
             Opcodes.ACC_PRIVATE, "main$", descriptor, null, null
         )
         mainVisitor.visitCode()
-        generator.mainFunc(mainVisitor)
+        compiler.mainFunc(mainVisitor)
         mainVisitor.visitMaxs(0, 0)
         mainVisitor.visitEnd()
     }
 
     private fun ClassVisitor.compileConst(
-        generator: ReselectorGenerator
+        compiler: ReselectorCompiler
     ) {
         val staticVisitor = visitMethod(
             Opcodes.ACC_STATIC, "<clinit>", "()V", null, null
         )
         staticVisitor.visitCode()
-        generator.clInitFunc(staticVisitor)
+        compiler.clInitFunc(staticVisitor)
         staticVisitor.visitInsn(Opcodes.RETURN)
         staticVisitor.visitMaxs(0, 0)
         staticVisitor.visitEnd()

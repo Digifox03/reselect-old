@@ -1,6 +1,5 @@
-package it.digifox03.reselect.parser
+package it.digifox03.reselect
 
-import it.digifox03.reselect.compiler.ReselectorGenerator
 import kotlinx.serialization.json.JsonElement
 import net.minecraft.util.Identifier
 
@@ -20,12 +19,12 @@ internal interface ReselectorParser {
 
     interface ReselectorHelper {
         val dataSet: Map<String, Class<*>>
-        val superReselector: ReselectorGenerator
-        fun delegate(id: Identifier): ReselectorGenerator
+        val superReselector: ReselectorCompiler
+        fun delegate(id: Identifier): ReselectorCompiler
     }
 
     fun parse(
         element: JsonElement,
         helper: ReselectorHelper
-    ): ReselectorGenerator
+    ): ReselectorCompiler
 }

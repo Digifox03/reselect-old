@@ -3,7 +3,7 @@ package it.digifox03.reselect.api;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public interface ReselectorCompiler {
+public interface ReselectorProvider {
     /**
      * This method can be called to require a selector of the specified type.
      * An exception will be raised if the required reselector cannot be found
