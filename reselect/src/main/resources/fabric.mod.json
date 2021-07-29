@@ -16,10 +16,7 @@
   "icon": "assets/reselect/icon.png",
   "entrypoints": {
     "client": [
-      {
-        "adapter": "kotlin",
-        "value": "it.digifox03.reselect.ReselectKt::clientEntry"
-      }
+      "it.digifox03.reselect.ClientEntry"
     ]
   },
   "depends": {
