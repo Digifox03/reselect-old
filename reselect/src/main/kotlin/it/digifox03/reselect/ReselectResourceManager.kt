@@ -14,13 +14,14 @@ internal class ReselectResourceManager : SimpleSynchronousResourceReloadListener
     override fun getFabricId() = fabricId
 
     private fun load(manager: ResourceManager, identifier: Identifier, level: Int): JsonElement {
+        val id = Identifier(identifier.namespace, identifier.path + ".json")
         return if (level == 0) {
-            val resource = manager.getResource(identifier)
+            val resource = manager.getResource(id)
             val element = Json.parseToJsonElement(resource.inputStream.reader().readText())
             resource.close()
             element
         } else {
-            val resources = manager.getAllResources(identifier)
+            val resources = manager.getAllResources(id)
             val resource = resources[resources.size - level]
             val element = Json.parseToJsonElement(resource.inputStream.reader().readText())
             resources.forEach { it.close() }

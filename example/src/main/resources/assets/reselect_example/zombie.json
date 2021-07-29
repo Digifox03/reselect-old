@@ -1,4 +1,6 @@
 {
-  "version": 1,
-  "root": "minecraft:textures/entity/steve.png"
+  "version": "0.1",
+  "root": {
+    "$identifier": "minecraft:textures/entity/steve.png"
+  }
 }
