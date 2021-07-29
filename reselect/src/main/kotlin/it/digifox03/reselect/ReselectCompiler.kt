@@ -14,7 +14,7 @@ import org.objectweb.asm.Type
 import java.lang.reflect.Method
 import it.digifox03.reselect.api.ReselectorCompiler as IReselectorCompiler
 
-class ReselectCompiler(
+internal class ReselectCompiler(
     private val generation: String,
     private val readReselector: (id: Identifier, level: Int) -> JsonElement,
     private val loadClass: (data: ByteArray) -> Class<*>
