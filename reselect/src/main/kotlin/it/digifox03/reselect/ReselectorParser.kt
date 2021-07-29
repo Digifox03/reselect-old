@@ -1,6 +1,6 @@
 package it.digifox03.reselect
 
-import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
 import net.minecraft.util.Identifier
 
 internal interface ReselectorParser {
@@ -24,7 +24,7 @@ internal interface ReselectorParser {
     }
 
     fun parse(
-        element: JsonElement,
+        element: JsonObject,
         helper: ReselectorHelper
     ): ReselectorCompiler
 }
