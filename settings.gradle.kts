@@ -1,5 +1,6 @@
 rootProject.name = "reselect"
 include("reselect")
+include("example")
 
 pluginManagement {
     val loomVersion: String by settings

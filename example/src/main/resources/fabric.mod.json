@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "reselect",
+  "id": "reselect_example",
   "version": "${version}",
   "authors": ["Digifox03"],
-  "name": "Reselect",
+  "name": "Reselect Example",
   "environment": "client",
   "contact": {
     "email": "digifox03@protonmail.com",
@@ -13,19 +13,22 @@
     "discord": "https://discord.gg/pZZ5ubrwQK"
   },
   "license": "LGPL-3.0-or-later",
-  "icon": "assets/reselect/icon.png",
+  "icon": "assets/reselect_example/icon.png",
+  "recommends": {
+    "reselect": "*"
+  },
   "entrypoints": {
-    "client": [
-      "it.digifox03.reselect.ReselectClientEntry"
+    "reselector_user": [
+      "it.digifox03.reselect.example.ExampleReselectorUser"
     ]
   },
   "depends": {
     "minecraft": "1.17.x",
     "fabricloader": "*",
-    "fabric-resource-loader-v0": "*",
     "java": ">=16",
     "fabric-language-kotlin": ">=1.6.2+kotlin.1.5.20"
   },
+  "mixins": ["reselect_example.mixins.json"],
   "custom": {
     "modmenu": {
       "links": {

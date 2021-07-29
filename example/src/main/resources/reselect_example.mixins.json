@@ -1,0 +1,7 @@
+{
+  "compatibilityLevel": "JAVA_16",
+  "package": "it.digifox03.reselect.example.mixins",
+  "client": [
+    "ZombieBaseEntityRendererMixin"
+  ]
+}

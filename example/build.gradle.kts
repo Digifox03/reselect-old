@@ -3,14 +3,15 @@ plugins {
     kotlin("jvm")
 }
 
-val modVersion: String by project
+val modVersion = "0.1-test"
+val archiveName = "reselectExample"
 val mavenGroup: String by project
 val minecraftVersion: String by project
 val yarnMappings: String by project
 val loaderVersion: String by project
 val fabricVersion: String by project
 val fabricKotlinVersion: String by project
-val archiveName: String by project
+
 
 version = modVersion
 group = mavenGroup
@@ -23,8 +24,7 @@ dependencies {
     minecraft("com.mojang", "minecraft", minecraftVersion)
     mappings("net.fabricmc", "yarn", yarnMappings, classifier="v2")
     modImplementation("net.fabricmc", "fabric-loader", loaderVersion)
-    modImplementation("net.fabricmc", "fabric-language-kotlin", fabricKotlinVersion)
-    modImplementation(fabricApi.module("fabric-resource-loader-v0", fabricVersion))
+    implementation(project(":reselect"))
 }
 
 java {
